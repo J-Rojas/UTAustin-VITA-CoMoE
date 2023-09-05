@@ -1,0 +1,32 @@
+description: ImageNet
+
+target:
+  service: amlk8s
+  name: itphyperdgx2cl1
+  vc: hai3
+
+#target:
+#  service: amlk8s
+#  name: itp-scus-v100
+#  vc: AlexTScience
+
+environment:
+  image: geekjzy/fastmoe:third
+  username: geekjzy
+
+storage:
+  models:
+    storage_account_name: tsinterns
+    container_name: v-tianlc
+    mount_dir: /mnt/models
+
+code:
+  local_dir: $CONFIG_DIR/
+
+jobs:
+-   name: ImageNet
+    sku_count: 1
+    sku: G16
+    command:
+    - export MKL_THREADING_LAYER='GNU'
+    - bash cmds/to_run_script/comoe_repro.sh
